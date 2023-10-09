@@ -1,0 +1,51 @@
+Task 1: 
+You dont need to read input or print anything. Complete the function toSumTree() which takes root node as input parameter and modifies the given tree in-place.
+Note: If you click on Compile and Test the output will be the in-order traversal of the modified tree.
+
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(height of tree)
+ 
+Constraints:
+1 ≤ N ≤ 104
+
+Answers :- 
+
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+
+class Solution:
+    def toSumTree(self, root):
+        if root is None:
+            return 0
+
+        left_sum = self.toSumTree(root.left)
+        right_sum = self.toSumTree(root.right)
+
+        original_data = root.data
+
+        root.data = left_sum + right_sum
+
+        return original_data + root.data
+
+def inOrderTraversal(root):
+    if root:
+        inOrderTraversal(root.left)
+        #print(root.data, end=' ')
+        inOrderTraversal(root.right)
+
+if __name__ == "__main__":
+    root = Node(10)
+    root.left = Node(-2)
+    root.right = Node(6)
+    root.left.left = Node(8)
+    root.left.right = Node(-4)
+    root.right.left = Node(7)
+    root.right.right = Node(5)
+
+    solution = Solution()
+    solution.toSumTree(root)
+
+    inOrderTraversal(root)
