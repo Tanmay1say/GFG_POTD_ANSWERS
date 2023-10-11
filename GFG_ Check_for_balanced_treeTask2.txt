@@ -1,0 +1,49 @@
+Task 2 :-
+You don't need to take input. Just complete the function isBalanced() that takes root node as parameter and returns true, if the tree is balanced else returns false.
+
+Constraints:
+1 <= Number of nodes <= 105
+1 <= Data of a node <= 109
+
+Expected time complexity: O(N)
+Expected auxiliary space: O(h) , where h = height of tree
+
+Answer :-
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class Solution:
+    def isBalanced(self, root):
+        def checkBalance(node):
+            if not node:
+                return (True, 0)
+
+            left_is_balanced, left_height = checkBalance(node.left)
+            if not left_is_balanced:
+                return (False, 0)
+
+            right_is_balanced, right_height = checkBalance(node.right)
+            if not right_is_balanced:
+                return (False, 0)
+
+            is_current_balanced = abs(left_height - right_height) <= 1
+            current_height = max(left_height, right_height) + 1
+
+            return (is_current_balanced, current_height)
+
+        is_balanced, _ = checkBalance(root)
+        return is_balanced
+
+# Example usage:
+# Create a sample tree
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.right = Node(6)
