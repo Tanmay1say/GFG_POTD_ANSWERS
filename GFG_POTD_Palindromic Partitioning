@@ -1,0 +1,49 @@
+#User function Template for python3
+class Solution:
+    def palindromicPartition(self, string):
+        n = len(string)
+
+        # Create a boolean table to store results of subproblems
+        # isPalindrome[i][j] will be true if substring str[i..j] is palindrome,
+        # else false. Note that str[i..j] is inclusive.
+        isPalindrome = [[False for _ in range(n)] for _ in range(n)]
+
+        # All substrings of length 1 are palindromes
+        for i in range(n):
+            isPalindrome[i][i] = True
+
+        # L is the substring length. Build the solution in bottom-up manner by
+        # considering all substrings of length starting from 2 to n.
+        for L in range(2, n + 1):
+            for i in range(n - L + 1):
+                j = i + L - 1  # Set ending index
+
+                # If L is 2, then we just need to compare two characters.
+                if L == 2:
+                    isPalindrome[i][j] = (string[i] == string[j])
+                else:
+                    isPalindrome[i][j] = (string[i] == string[j] and isPalindrome[i + 1][j - 1])
+
+        # Create two arrays to store minimum number of cuts needed for
+        # palindrome partitioning for the substring str[0...i] and str[0...j]
+        # respectively.
+        cuts = [0] * n
+
+        # For a string with i characters, it requires at most i-1 cuts
+        # since a single character is itself a palindrome.
+        for i in range(n):
+            if isPalindrome[0][i]:
+                cuts[i] = 0
+            else:
+                cuts[i] = float('inf')
+                for j in range(i):
+                    if isPalindrome[j + 1][i] and cuts[j] + 1 < cuts[i]:
+                        cuts[i] = cuts[j] + 1
+
+        # Return the minimum cuts required
+        return cuts[n - 1]
+
+
+# Example usage:
+sol = Solution()
+string = "ababbbabbababa"
