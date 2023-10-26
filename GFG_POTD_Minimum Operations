@@ -1,0 +1,22 @@
+Task:
+You don't need to read input or print anything. Your task is to complete the function minOperation()
+which accepts an integer N and return number of minimum operations required to reach N from 0.
+Expected Time Complexity: O(LogN)
+Expected Auxiliary Space: O(1)
+Constraints:
+1 <= N <= 106
+
+Answer :
+
+class Solution:
+    def minOperation(self, n):
+        count = 0
+        while n > 0:
+            if n % 2 == 0:
+                n = n // 2
+            else:
+                n -= 1
+            count += 1
+        return count
+
+
