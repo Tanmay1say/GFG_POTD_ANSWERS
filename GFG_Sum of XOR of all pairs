@@ -1,0 +1,30 @@
+Task:
+You do not have to take input or print output. You only need to complete the function sumXOR() that takes an array (arr), sizeOfArray (n), and return the sum of xor of all pairs of numbers in the array.
+
+Expected Time Complexity: O(n).
+Expected Auxiliary Space: O(1).
+
+Constraints
+2 ≤ n ≤ 105
+1 ≤ arr[i] ≤ 105
+
+Answer:-
+
+
+class Solution:
+    def sumXOR(self, arr, n):
+        xor_sum = 0
+
+        for i in range(0, 32):
+            count_zero = 0
+            count_one = 0
+
+            for j in range(n):
+                if arr[j] & (1 << i):
+                    count_one += 1
+                else:
+                    count_zero += 1
+
+            xor_sum += (count_zero * count_one) * (1 << i)
+
+        return xor_sum
